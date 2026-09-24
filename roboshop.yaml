@@ -39,7 +39,6 @@
       overwrite: true
       value: "{{ item.instances[0].public_ip_address }}"
     loop: "{{ ec2_output.results }}"
-      
     when: instance_state == "create"
 
   - name: Delete ec2 instance
