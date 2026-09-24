@@ -20,8 +20,7 @@
       instance_type: "{{ instance_type }}"
       security_group: "{{ sg_id }}"
       subnet_id: "{{ snet_id }}"
-    loop:
-    - instances
+    loop: "{{ instances }}"
     register: ec2_output
 
   - name: get ec2_output
@@ -36,5 +35,4 @@
       type: A
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}"
-    loop:
-    - ec2_output.results
+    loop: "{{ ec2_output.results }}"
