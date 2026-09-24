@@ -44,6 +44,8 @@
   - name: Delete ec2 instance
     amazon.aws.ec2_instance:
       name: "{{ item }}-{{ env }}"
+      filters: 
+         "tag:Name": "{{ item }}-{{ env }}"
       state: absent
     loop: "{{ instances }}"
     when: instance_state == "delete"
