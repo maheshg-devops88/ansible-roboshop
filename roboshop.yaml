@@ -1,6 +1,6 @@
 ---
  - name: create ec2 instance for roboshop project
-   hosts: all
+   hosts: local
    connection: local
    vars:
     image_id: ami-0220d79f3f480ecf5
