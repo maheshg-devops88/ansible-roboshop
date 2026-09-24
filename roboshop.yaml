@@ -8,6 +8,7 @@
     sg_id: sg-020b6d9853c171a73
     snet_id: subnet-06a0137ee419d9703
     env: dev
+    domain: daws88s.shop
    tasks:
      - name: create ec2 instance 
        amazon.aws.ec2_instance:
@@ -18,3 +19,17 @@
          subnet_id: "{{ snet_id }}"
        loop: 
          - mongodb
+       register: ec2_output
+      
+     - name: get ec2_output 
+       ansible.builtin.debug:
+         msg: "{{ ec2_output }}"
+       
+
+    #  - name: create ec2 record in route53
+    #   #  amazon.aws.route53:
+    #   #   state: present 
+    #   #   zone: "{{ domain }}"  
+    #   #   record: "{{ item }}.{{ domain }}"
+    #   #   type: A
+    #   #   ttl: 1
