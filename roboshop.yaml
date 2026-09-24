@@ -53,5 +53,6 @@
     amazon.aws.route53:
       record: "{{ item }}-{{ env }}.{{ domain }}"
       state: absent
+      type: A
     loop: "{{ instances }}"
     when: instance_state == "delete"
