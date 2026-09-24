@@ -52,6 +52,7 @@
   - name: Delete aws route53 record
     amazon.aws.route53:
       record: "{{ item }}-{{ env }}.{{ domain }}"
+      zone: "{{ domain }}"
       state: absent
       type: A
     loop: "{{ instances }}"
