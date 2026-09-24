@@ -51,7 +51,7 @@
 
   - name: Delete aws route53 record
     amazon.aws.route53:
-      record: "{{ item.instances[0].tags.Name }}.{{ domain }}"
+      record: "{{ item }}-{{ env }}.{{ domain }}"
       state: absent
-    loop: "{{ ec2_output.results }}"
+    loop: "{{ instances }}"
     when: instance_state == "delete"
