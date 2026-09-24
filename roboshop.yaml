@@ -7,10 +7,11 @@
     instance_type: t2.micro
     sg_id: sg-020b6d9853c171a73
     snet_id: subnet-06a0137ee419d9703
+    env: dev
    tasks:
      - name: create ec2 instance 
        amazon.aws.ec2_instance:
-         name: "{{ item }}"
+         name: "{{ item }}-{{ env }}"
          image_id: "{{ image_id }}"
          instance_type: "{{ instance_type }}"
          security_group: "{{ sg_id }}"
