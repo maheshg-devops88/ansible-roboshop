@@ -11,9 +11,9 @@
      - name: create ec2 instance 
        amazon.aws.ec2_instance:
          name: "{{ item }}"
-         image_id: {{ image_id }}
-         instance_type: {{ instance_type }}
-         security_group: {{ sg_id }}
-         subnet_id: {{ snet_id }}
+         image_id: "{{ image_id }}"
+         instance_type: "{{ instance_type }}"
+         security_group: "{{ sg_id }}"
+         subnet_id: "{{ snet_id }}"
        loop: 
          - mongodb
