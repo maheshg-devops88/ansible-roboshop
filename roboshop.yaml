@@ -23,7 +23,7 @@
       subnet_id: "{{ snet_id }}"
     loop: "{{ instances }}"
     register: ec2_output
-    when: instance_state == create
+    when: instance_state == "create"
 
   - name: get ec2_output
     ansible.builtin.debug:
@@ -38,18 +38,18 @@
       ttl: 1
       value: "{{ item.instances[0].public_ip_address }}"
     loop: "{{ ec2_output.results }}"
-    when: instance_state == create
+    when: instance_state == "create"
 
   - name: Delete ec2 instance
     amazon.aws.ec2_instance:
       name: "{{ item }}-{{ env }}"
       state: absent
     loop: "{{ instances }}"
-    when: instance_state == delete
+    when: instance_state == "delete"
 
   - name: Delete aws route53 record
     amazon.aws.route53:
       record: "{{ item.instances[0].tags.Name }}.{{ domain }}"
       state: absent
     loop: "{{ ec2_output.results }}"
-    when: instance_state == delete
+    when: instance_state == "delete"
