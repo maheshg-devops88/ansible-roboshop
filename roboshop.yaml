@@ -9,6 +9,9 @@
     snet_id: subnet-06a0137ee419d9703
     env: dev
     domain: daws88s.shop
+    instances:
+    - mongodb
+    - catalogue
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
@@ -18,18 +21,20 @@
       security_group: "{{ sg_id }}"
       subnet_id: "{{ snet_id }}"
     loop:
-    - mongodb
-    - catalogue
+    - instances
     register: ec2_output
 
   - name: get ec2_output
     ansible.builtin.debug:
       msg: "{{ ec2_output }}"
 
-  # - name: create ec2 record in route53
-  #   amazon.aws.route53:
-  #     state: present
-  #     zone: "{{ domain }}"
-  #     record: "{{ item }}.{{ domain }}"
-  #     type: A
-  #     ttl: 1
+  - name: create ec2 record in route53
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain }}"
+      record: "{{ item.instances[0].tags.Name }}.{{ domain }}"
+      type: A
+      ttl: 1
+      value: "{{ item.instances[0].private_ip_address }}"
+    loop:
+    - ec2_output.results
