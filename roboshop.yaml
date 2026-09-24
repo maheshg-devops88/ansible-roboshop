@@ -10,7 +10,7 @@
    tasks:
      - name: create ec2 instance 
        amazon.aws.ec2_instance:
-         name: {{ item }}
+         name: "{{ item }}"
          image_id: {{ image_id }}
          instance_type: {{ instance_type }}
          security_group: {{ sg_id }}
