@@ -9,9 +9,7 @@
     snet_id: subnet-06a0137ee419d9703
     env: dev
     domain: daws88s.shop
-    instance_state:
-    - create
-    - delete
+    instance_state: create
     instances:
     - mongodb
     - catalogue
