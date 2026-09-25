@@ -43,6 +43,11 @@
       path: /app
       state: latest
 
+  - name: copy catalogue service to /etc/systemd/system/catalogue.service
+    ansible.builtin.copy:
+      src: /home/ec2-user/ansible-roboshop/catalogue.service 
+      dest: /etc/systemd/system
+
   - name: systemd reload
     ansible.builtin.systemd_service:
       daemon_reload: true
