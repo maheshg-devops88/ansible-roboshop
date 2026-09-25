@@ -6,7 +6,7 @@
   tasks:
     - name: Copy mongo.repo file to /etc/yum.repos.d/mongo.repo
       ansible.builtin.copy:
-        src: mongo.repo
+        src: /home/ec2-user/ansible-roboshop/mongo.repo
         dest: /etc/yum.repos.d
         remote_src: yes
 
