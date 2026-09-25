@@ -1,0 +1,61 @@
+---
+- name: Configure Catalogue Service
+  hosts: catalogue
+  become: true
+  tasks:
+  - name: Disable nodejs
+    ansible.builtin.command: dnf module disable nodejs -y
+
+  - name: Enable nodejs
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+
+  - name: Install nodejs
+    ansible.builtin.dnf:
+      name: nodejs
+      state: present
+
+  - name: Create roboshop user
+    ansible.builtin.user:
+      name: roboshop
+      comment: "roboshop system user"
+      system: true
+      home: /app
+      shell: /sbin/nologin
+
+  - name: Create app Directory
+    ansible.builtin.file:
+      name: /app
+      state: directory
+
+  - name: download application code
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+      dest: /tmp/catalogue.zip
+
+  - name: unarchive catalogue zip file
+    ansible.builtin.unarchive:
+      src: /tmp/catalogue.zip
+      dest: /app
+
+  - name: Install npm
+    community.general.npm:
+      path: /app
+      state: latest
+
+  - name: systemd reload
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+      name: catalogue
+
+  - name: Enable and Start Catalogue Service
+    ansible.builtin.service:
+      name: catalogue
+      state: started
+      enabled: true
+
+  - name: Install mongodb-mongosh
+    ansible.builtin.dnf:
+      name: mongodb-mongosh
+
+  - name: load master data to mongodb 
+    ansible.builtin.shell: mongosh --host mongodb-dev.daws88s.shop </app/db/master-data.js
