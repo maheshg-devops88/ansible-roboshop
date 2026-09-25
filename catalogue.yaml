@@ -2,6 +2,7 @@
 - name: Configure Catalogue Service
   hosts: catalogue
   become: true
+  connection: local
   tasks:
   - name: Disable nodejs
     ansible.builtin.command: dnf module disable nodejs -y
