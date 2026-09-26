@@ -13,13 +13,6 @@
     ansible.builtin.dnf:
       name: nginx
       state: present
-
-  - name: Start and Enable nginx
-    ansible.builtin.service:
-      name: nginx
-      enabled: yes
-      state: started
-
   - name: Remove default file
     ansible.builtin.file:
       path: /usr/share/nginx/html/*
@@ -39,4 +32,9 @@
     ansible.builtin.copy: 
        src: /home/ec2-user/ansible-roboshop/nginx.conf
        dest: /etc/nginx/
-       remote_src: yes
+  
+  - name: Start and Enable nginx
+    ansible.builtin.service:
+      name: nginx
+      enabled: yes
+      state: started
