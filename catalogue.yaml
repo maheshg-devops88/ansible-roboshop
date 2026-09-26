@@ -55,8 +55,6 @@
       daemon_reload: true
       name: catalogue
 
-
-
   - name: Copy mongo.repo file to /etc/yum.repos.d/mongo.repo
     ansible.builtin.copy:
       src: /home/ec2-user/ansible-roboshop/mongo.repo
@@ -75,6 +73,9 @@
     ansible.builtin.debug:
       msg: "{{ catalogue_output }}"
 
+  - name: load the products
+    ansible.builtin.shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+    when: catalogue_output.stdout  | int < 0
 
   - name: Enable and Start Catalogue Service
     ansible.builtin.service:
