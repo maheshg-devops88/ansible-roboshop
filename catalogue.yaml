@@ -52,11 +52,7 @@
       daemon_reload: true
       name: catalogue
 
-  - name: Enable and Start Catalogue Service
-    ansible.builtin.service:
-      name: catalogue
-      state: started
-      enabled: true
+
 
   - name: Copy mongo.repo file to /etc/yum.repos.d/mongo.repo
     ansible.builtin.copy:
@@ -68,4 +64,16 @@
       name: mongodb-mongosh
 
   - name: load master data to mongodb 
-    ansible.builtin.shell: mongosh --host mongodb-dev.daws88s.shop </app/db/master-data.js
+    ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogue_output
+
+  - name: print the catalogue_output
+    ansible.builtin.debug:
+      msg: "{{ catalogue_output }}"
+
+
+  - name: Enable and Start Catalogue Service
+    ansible.builtin.service:
+      name: catalogue
+      state: started
+      enabled: true
