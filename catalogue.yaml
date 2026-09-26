@@ -63,6 +63,7 @@
   - name: Install mongodb-mongosh
     ansible.builtin.dnf:
       name: mongodb-mongosh
+      state: present
 
   - name: load master data to mongodb 
     ansible.builtin.command: mongosh --host "{{ MONGODB_HOST }}" --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
