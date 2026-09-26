@@ -1,17 +1,20 @@
 ---
- - name: Install mysql server 
-   hosts: mysql 
-   become: true 
-   tasks:
-     - name: Install mysql
-       ansible.builtin.dnf:
-         name: mysql-server
-         state: present 
+- name: Install mysql server
+  hosts: mysql
+  become: true
+  tasks:
+  - name: Install mysql
+    ansible.builtin.dnf:
+      name: mysql-server
+      state: present
 
-     - name: Enable and Start the Service 
-       ansible.builtin.service: 
-          name: mysqld 
-          enabled: yes 
-          state: started 
+  - name: Enable and Start the Service
+    ansible.builtin.service:
+      name: mysqld
+      enabled: yes
+      state: started
 
-          
+  - name: Update mysql password
+    ansible.mysql.mysql_user:
+      username: root
+      password: RoboShop@1

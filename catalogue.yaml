@@ -3,15 +3,15 @@
   hosts: catalogue
   become: true
   tasks:
-  - name: Disable nodejs
-    ansible.builtin.command: dnf module disable nodejs -y
+  # - name: Disable nodejs
+  #   ansible.builtin.command: dnf module disable nodejs -y
 
-  - name: Enable nodejs
-    ansible.builtin.command: dnf module enable nodejs:20 -y
+  # - name: Enable nodejs
+  #   ansible.builtin.command: dnf module enable nodejs:20 -y
 
   - name: Install nodejs
     ansible.builtin.dnf:
-      name: nodejs
+      name: nodejs:20
       state: present
 
   - name: Create roboshop user
