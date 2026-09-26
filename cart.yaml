@@ -45,7 +45,7 @@
   
    - name: copy cart service to /etc/systemd/system/cart.service
      ansible.builtin.copy:
-      src: /home/ec2-cart/ansible-roboshop/cart.service
+      src: /home/ec2-user/ansible-roboshop/cart.service
       dest: /etc/systemd/system
 
    - name: systemd reload
