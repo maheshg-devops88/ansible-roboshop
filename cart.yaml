@@ -1,6 +1,6 @@
 ---
-- name: Configure user
-  hosts: user
+- name: Configure cart
+  hosts: cart
   become: true 
   tasks:
    - name: Disable nodejs
@@ -15,7 +15,7 @@
       state: present
    
    - name: Create roboshop user
-     ansible.builtin.user:
+     ansible.builtin.cart:
        name: roboshop
        comment: "roboshop system user"
        system: true
@@ -29,12 +29,12 @@
 
    - name: download application code
      ansible.builtin.get_url:
-       url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
-       dest: /tmp/user.zip
+       url: https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip 
+       dest: /tmp/cart.zip
 
-   - name: unarchive user zip file
+   - name: unarchive cart zip file
      ansible.builtin.unarchive:
-      src: /tmp/user.zip
+      src: /tmp/cart.zip
       dest: /app
       remote_src: yes
 
@@ -43,18 +43,18 @@
       path: /app
       state: latest
   
-   - name: copy user service to /etc/systemd/system/user.service
+   - name: copy cart service to /etc/systemd/system/cart.service
      ansible.builtin.copy:
-      src: /home/ec2-user/ansible-roboshop/user.service 
+      src: /home/ec2-cart/ansible-roboshop/cart.service 
       dest: /etc/systemd/system
 
    - name: systemd reload
      ansible.builtin.systemd_service:
        daemon_reload: true
-       name: user
   
-   - name: Enable and Start user Service
+  
+   - name: Enable and Start cart Service
      ansible.builtin.service:
-       name: user
+       name: cart
        state: started
        enabled: true
