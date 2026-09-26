@@ -1,32 +1,27 @@
 ---
-- name: Install MongoDB 
-  hosts: mongodb 
-  become: true 
-  connection: local
+- name: Install MongoDB
+  hosts: mongodb
+  become: true
   tasks:
-    - name: Copy mongo.repo file to /etc/yum.repos.d/mongo.repo
-      ansible.builtin.copy:
-        src: /home/ec2-user/ansible-roboshop/mongo.repo
-        dest: /etc/yum.repos.d
-        remote_src: yes
+  - name: Copy mongo.repo file to /etc/yum.repos.d/mongo.repo
+    ansible.builtin.copy:
+      src: /home/ec2-user/ansible-roboshop/mongo.repo
+      dest: /etc/yum.repos.d
+      remote_src: yes
 
-    - name: Install mongodb 
-      ansible.builtin.dnf:
-         name: mongodb-org
-         state: present 
+  - name: Install mongodb
+    ansible.builtin.dnf:
+      name: mongodb-org
+      state: present
 
-    - name: Replace 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf
-      ansible.builtin.replace:
-        path: /etc/mongod.conf
-        regexp: '127.0.0.1'
-        replace: '0.0.0.0' 
+  - name: Replace 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf
+    ansible.builtin.replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
 
-    - name: Enable and Start MongoDB 
-      ansible.builtin.service:
-         name: mongod 
-         enabled: yes 
-         state: started 
-
-     
-
-     
+  - name: Enable and Start MongoDB
+    ansible.builtin.service:
+      name: mongod
+      enabled: yes
+      state: started

@@ -2,7 +2,6 @@
 - name: Configure Frontend
   hosts: frontend
   become: true
-  connection: local
   tasks:
   - name: Disable default nginx
     ansible.builtin.command: dnf module disable nginx -y
