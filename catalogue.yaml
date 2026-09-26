@@ -2,6 +2,8 @@
 - name: Configure Catalogue Service
   hosts: catalogue
   become: true
+  vars:
+    MONGODB_HOST: mongodb-dev.daws88s.shop
   tasks:
   - name: Disable nodejs
     ansible.builtin.command: dnf module disable nodejs -y
