@@ -1,6 +1,7 @@
 ---
 - name: Configure Frontend
   hosts: frontend
+  become: true
   connection: local
   tasks:
   - name: Disable default nginx
