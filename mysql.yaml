@@ -24,3 +24,4 @@
     community.mysql.mysql_user:
       name: root
       password: RoboShop@1
+      login_unix_socket: /var/lib/mysql/mysql.sock
