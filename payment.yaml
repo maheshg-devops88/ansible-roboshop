@@ -30,6 +30,12 @@
          url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
          dest: /tmp/payment.zip
 
+     - name: unarchive payment.jar zip file
+       ansible.builtin.unarchive:
+         src: /tmp/payment.zip
+         dest: /app
+         remote_src: yes
+
      - name: Install specified python requirements
        ansible.builtin.pip:
           requirements: requirements.txt
