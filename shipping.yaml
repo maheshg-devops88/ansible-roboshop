@@ -10,7 +10,7 @@
     - name: Install maven 
       ansible.builtin.dnf:
         name: maven 
-        state: started 
+        state: present
     
     - name: Create roboshop user
       ansible.builtin.user:
