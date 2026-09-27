@@ -76,6 +76,7 @@
 
     - name: Create target database if it does not exist
       community.mysql.mysql_db:
+         name: all
          login_host: "{{ sql_hostname }}"
          login_user: "{{ mysql_user }}"
          login_password: "{{ mysql_password }}"
