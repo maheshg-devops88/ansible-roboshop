@@ -41,7 +41,7 @@
       args:
          chdir: /app
 
-    - name: move file from target/shipping-1.0.jar shipping.jar 
+    - name: copy file from target/shipping-1.0.jar shipping.jar 
       ansible.builtin.copy:
         src: /app/target/shipping-1.0.jar
         dest: /app
