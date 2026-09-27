@@ -12,7 +12,7 @@
     ansible.builtin.service:
       name: mysqld
       enabled: yes
-      state: started
+      state: restarted
 
   - name: Update mysql password
     ansible.mysql.mysql_user:
