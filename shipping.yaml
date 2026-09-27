@@ -29,7 +29,12 @@
       ansible.builtin.get_url:
        url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
        dest: /tmp/shipping.zip
-
+    
+    - name: unarchive shipping.jar zip file
+      ansible.builtin.unarchive:
+        src: /tmp/shipping.zip
+        dest: /app
+        remote_src: yes
 
     - name: change dir to /app and run mvn clean package
       ansible.builtin.command:  mvn clean package 

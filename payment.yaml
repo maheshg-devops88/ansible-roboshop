@@ -25,17 +25,17 @@
         name: /app
         state: directory
 
-     - name: Install specified python requirements
-       ansible.builtin.pip:
-          requirements: requirements.txt
-          chdir: /app
-
      - name: download application code
        ansible.builtin.get_url:
          url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
          dest: /tmp/payment.zip
 
+     - name: Install specified python requirements
+       ansible.builtin.pip:
+          requirements: requirements.txt
+          chdir: /app
 
+    
      - name: Copy payment.service file to /etc/systemd/system/payment.service
        ansible.builtin.copy:
          src: /home/ec2-user/ansible-roboshop/payment.service
@@ -48,5 +48,5 @@
      - name: Enable and Start Catalogue Service
        ansible.builtin.service:
          name: catalogue
-         state: started
+         state: restarted
          enabled: true
