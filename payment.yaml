@@ -51,8 +51,8 @@
        ansible.builtin.systemd_service:
         daemon_reload: true
     
-     - name: Enable and Start Catalogue Service
+     - name: Enable and Start payment Service
        ansible.builtin.service:
-         name: catalogue
+         name: payment
          state: restarted
          enabled: true
