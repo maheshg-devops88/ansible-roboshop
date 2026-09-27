@@ -15,6 +15,6 @@
       state: restarted
 
   - name: Update mysql password
-    ansible.mysql.mysql_user:
+    community.mysql.mysql_user:
       username: root
       password: RoboShop@1
