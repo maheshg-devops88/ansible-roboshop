@@ -14,11 +14,11 @@
       enabled: yes
       state: restarted
 
-  - name: Install dependencies for mysql
-    ansible.builtin.pip:
-      name: "{{ item }}"
-    loop: 
-      - PyMySQL
+  # - name: Install dependencies for mysql
+  #   ansible.builtin.pip:
+  #     name: "{{ item }}"
+  #   loop: 
+  #     - PyMySQL
 
   - name: setup root password
     ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
