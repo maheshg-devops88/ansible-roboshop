@@ -14,6 +14,13 @@
       enabled: yes
       state: restarted
 
+  - name: Install dependencies for mysql
+    ansible.builtin.pip:
+      name: "{{ item }}"
+    loop: 
+      - mysqlclient 
+      - PyMySQL
+
   - name: Update mysql password
     community.mysql.mysql_user:
       user: root
