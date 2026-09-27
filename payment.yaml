@@ -19,6 +19,11 @@
          system: true
          home: /app
          shell: /sbin/nologin   
+     
+     - name: delete app directory
+       ansible.builtin.file:
+        path: /app
+        state: absent
     
      - name: Create app Directory
        ansible.builtin.file:
@@ -39,6 +44,8 @@
      - name: Install specified python requirements
        ansible.builtin.pip:
           requirements: requirements.txt
+          executable: pip3.9
+       args:   
           chdir: /app
 
     
