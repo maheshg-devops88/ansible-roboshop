@@ -18,7 +18,6 @@
     ansible.builtin.pip:
       name: "{{ item }}"
     loop: 
-      - mysqlclient 
       - PyMySQL
 
   - name: Update mysql password
