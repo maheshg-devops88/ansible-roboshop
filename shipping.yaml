@@ -56,6 +56,12 @@
         name: mysql 
         state: present
 
+    - name: Install dependencies for mysql
+      ansible.builtin.pip:
+        name: "{{ item }}"
+      loop: 
+      - PyMySQL
+
     - name: Enable and Start Shipping Service
       ansible.builtin.service:
        name: shipping
