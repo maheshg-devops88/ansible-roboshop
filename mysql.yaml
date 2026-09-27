@@ -16,5 +16,5 @@
 
   - name: Update mysql password
     community.mysql.mysql_user:
-      username: root
+      user: root
       password: RoboShop@1

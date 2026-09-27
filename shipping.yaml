@@ -2,6 +2,10 @@
 - name: Configure Shipping
   hosts: shipping 
   become: true 
+  vars:
+     sql_hostname: mysql-dev.daws88s.shop
+     mysql_user: root
+     mysql_password: RoboShop@1
   tasks: 
     - name: Install maven 
       ansible.builtin.dnf:
@@ -25,25 +29,46 @@
       ansible.builtin.get_url:
        url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
        dest: /tmp/shipping.zip
+
+
+    - name: change dir to /app and run mvn clean package
+      ansible.builtin.command:  mvn clean package 
+      args:
+         chdir: /app
+
+    - name: move file from target/shipping-1.0.jar shipping.jar 
+      ansible.builtin.file:
+        src: /app/target/shipping-1.0.jar
+        dest: /app/
     
     - name: copy shipping service to /etc/systemd/system/shipping.service
       ansible.builtin.copy:
        src: /home/ec2-user/ansible-roboshop/shipping.service 
        dest: /etc/systemd/system
-
+       
 
     - name: systemd reload
       ansible.builtin.systemd_service:
        daemon_reload: true
        
+    - name: Install mysql 
+      ansible.builtin.dnf: 
+        name: mysql 
+        state: present
+
     - name: Enable and Start Shipping Service
       ansible.builtin.service:
        name: shipping
        state: started
        enabled: true
 
-    
-    - name: Install mysql 
-      ansible.builtin.dnf: 
-        name: mysql 
-        state: present
+    - name: Create target database if it does not exist
+      ansible.mysql.mysql_db:
+         login_host: "{{ sql_hostname }}"
+         login_user: "{{ mysql_user }}"
+         login_password: "{{ mysql_password }}"
+         state: import 
+         target:
+            - /app/db/schema.sql
+            - /app/db/app-user.sql 
+            - /app/db/master-data.sql
