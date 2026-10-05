@@ -53,8 +53,9 @@
       value: "{{ item.instances[0].public_ip_address }}"
     loop: "{{ ec2_output.results }}"
     when: 
-        - item.instances[0].tags.Name == "frontend"
         - instance_state == "create"
+        - item.instances[0].tags.Name == "frontend"
+       
 
 
   - name: Delete ec2 instance
