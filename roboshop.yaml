@@ -54,7 +54,7 @@
     loop: "{{ ec2_output.results }}"
     when: 
         - instance_state == "create"
-        - item.instances[0].tags.Name == "frontend"
+        - item.item == "frontend"
        
 
 
