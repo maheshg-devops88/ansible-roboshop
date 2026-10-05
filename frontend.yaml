@@ -33,7 +33,7 @@
       remote_src: yes
 
   - name: Copy nginx.conf
-    ansible.builtin.copy: 
+    ansible.builtin.template: 
        src: /home/ec2-user/ansible-roboshop/nginx.conf.j2
        dest: /etc/nginx/nginx.conf
   
