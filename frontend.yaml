@@ -16,9 +16,9 @@
       path: /usr/share/nginx/html/*
       state: absent
   
-  - name: Delete frontend content in tmp Directory 
+  - name: Delete app code in tmp Directory 
     ansible.builtin.file: 
-      src: /tmp/frontend.zip
+      name: /tmp/frontend.zip
       state: absent 
 
   - name: Download the frontend content
