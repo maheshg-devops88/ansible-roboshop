@@ -38,9 +38,21 @@
       type: A
       ttl: 1
       overwrite: true
-      value: "{{ item.instances[0].public_ip_address }}"
+      value: "{{ item.instances[0].private_ip_address }}"
     loop: "{{ ec2_output.results }}"
     when: instance_state == "create"
+
+  - name: create ec2 record in route53
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain }}"
+      record: "roboshop.{{ domain }}"
+      type: A
+      ttl: 1
+      overwrite: true
+      value: "{{ item.instances[0].public_ip_address }}"
+    loop: "{{ ec2_output.results }}"
+    when: item.instances[0].tags.Name == "frontend"
 
   - name: Delete ec2 instance
     amazon.aws.ec2_instance:
