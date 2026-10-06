@@ -81,7 +81,7 @@
     - name: Enable and Start Shipping Service
       ansible.builtin.service:
        name: shipping
-       state: started
+       state: restarted
        enabled: true
 
     - name: Create target database if it does not exist
