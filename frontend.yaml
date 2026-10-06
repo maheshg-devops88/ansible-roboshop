@@ -34,7 +34,7 @@
 
   - name: Copy nginx.conf
     ansible.builtin.template: 
-       src: /home/ec2-user/ansible-roboshop/nginx.conf.j2
+       src: nginx.conf.j2
        dest: /etc/nginx/nginx.conf
   
   - name: Start and Enable nginx

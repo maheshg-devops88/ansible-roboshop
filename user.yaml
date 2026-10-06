@@ -3,9 +3,6 @@
   hosts: user
   become: true 
   tasks:
-   - name: Disable nodejs
-     ansible.builtin.command: dnf module disable nodejs -y
-
    - name: Enable nodejs
      ansible.builtin.command: dnf module enable nodejs:20 -y
 
@@ -21,11 +18,21 @@
        system: true
        home: /app
        shell: /sbin/nologin
+
+   - name: Delete app Directory
+     ansible.builtin.file:
+       name: /app 
+       state: absent
    
    - name: Create app Directory
      ansible.builtin.file:
        name: /app
        state: directory
+  
+   - name: Delete app code in tmp Directory 
+     ansible.builtin.file: 
+      name: /tmp/user.zip
+      state: absent 
 
    - name: download application code
      ansible.builtin.get_url:
@@ -43,10 +50,10 @@
       path: /app
       state: latest
   
-   - name: copy user service to /etc/systemd/system/user.service
-     ansible.builtin.copy:
-      src: /home/ec2-user/ansible-roboshop/user.service 
-      dest: /etc/systemd/system
+   - name: copy user service 
+     ansible.builtin.template:
+      src: user.service.j2
+      dest: /etc/systemd/system/user.service
 
    - name: systemd reload
      ansible.builtin.systemd_service:

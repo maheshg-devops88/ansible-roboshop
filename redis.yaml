@@ -3,9 +3,6 @@
   hosts: redis
   become: true
   tasks:
-  - name: Disable Redis
-    ansible.builtin.command: dnf module disable redis -y
-
   - name: Enable redis:7
     ansible.builtin.command: dnf module enable redis:7 -y
 
@@ -21,9 +18,9 @@
       replace: '0.0.0.0'
 
   - name: protected-mode from yes to no in /etc/redis/redis.conf
-    ansible.builtin.replace:
+    ansible.builtin.lineinfile:
       path: /etc/redis/redis.conf
-      regexp: 'protected-mode yes'
+      regexp: '^protected'
       replace: 'protected-mode no'
 
   - name: Start and Enable Redis Service
