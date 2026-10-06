@@ -3,9 +3,6 @@
   hosts: cart
   become: true 
   tasks:
-   - name: Disable nodejs
-     ansible.builtin.command: dnf module disable nodejs -y
-
    - name: Enable nodejs
      ansible.builtin.command: dnf module enable nodejs:20 -y
 
@@ -21,11 +18,21 @@
        system: true
        home: /app
        shell: /sbin/nologin
+
+   - name: Delete app Directory
+     ansible.builtin.file:
+       name: /app 
+       state: absent
    
    - name: Create app Directory
      ansible.builtin.file:
        name: /app
        state: directory
+
+   - name: Delete app code in tmp Directory 
+     ansible.builtin.file: 
+      name: /tmp/cart.zip
+      state: absent 
 
    - name: download application code
      ansible.builtin.get_url:
@@ -44,8 +51,8 @@
       state: latest
   
    - name: copy cart service to /etc/systemd/system/cart.service
-     ansible.builtin.copy:
-      src: /home/ec2-user/ansible-roboshop/cart.service
+     ansible.builtin.template:
+      src: cart.service.j2
       dest: /etc/systemd/system/
 
    - name: systemd reload
