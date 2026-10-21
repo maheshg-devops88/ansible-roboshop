@@ -15,3 +15,6 @@ Ansible code for deploying the Infrastructure in AWS and configuring the Robosho
 > To deploy the application code using ansible use below command for each roboshop service
 
 ansible-playbook -i inventory.ini mongodb.yaml
+
+
+| Yaml File |  Content |
