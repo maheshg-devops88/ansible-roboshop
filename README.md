@@ -17,4 +17,5 @@ Ansible code for deploying the Infrastructure in AWS and configuring the Robosho
 ansible-playbook -i inventory.ini mongodb.yaml
 
 
-|  Yaml File  |  Content  |
+| Yaml File | Content |
+| --- | --- |
