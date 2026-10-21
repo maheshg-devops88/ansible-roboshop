@@ -19,3 +19,4 @@ ansible-playbook -i inventory.ini mongodb.yaml
 
 | Yaml File | Content |
 | --- | --- |
+| roboshop.yaml | To deploy the ec2 instances or delete the ec2 instances |
